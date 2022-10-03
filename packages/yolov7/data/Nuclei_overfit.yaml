@@ -1,0 +1,9 @@
+# train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
+train: /content/drive/MyDrive/Guillaume_Shared/NucID/overfit/train
+val: /content/drive/MyDrive/Guillaume_Shared/NucID/overfit/val
+
+# number of classes
+nc: 1
+
+# class names
+names: [ 'nucleus' ]

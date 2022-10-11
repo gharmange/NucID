@@ -211,14 +211,18 @@ def stitch_coords(coords):
             border_index = border_indices_iterator[index]
 
             if batch_axis:
-                coord = coords[index][n]
+                xy_coord = coords[index][n][0:2]
+                conf = coords[index][n][2]
             else:
-                coord = coords[index]
+                xy_coord = coords[index][:,0:2]
+                conf = coords[index][:,2]
 
-            coord = coord + np.array([tile_index[0, 0], tile_index[1, 0]])
-            s = (border_index[0, 0] < coord[:, 0]) & (coord[:, 0] < border_index[0, 1]) & \
-                (border_index[1, 0] < coord[:, 1]) & (coord[:, 1] < border_index[1, 1])
-            batch_coords.append(coord[s])
+
+            xy_coord = xy_coord + np.array([tile_index[0, 0], tile_index[1, 0]])
+            s = (border_index[0, 0] < xy_coord[:, 0]) & (xy_coord[:, 0] < border_index[0, 1]) & \
+                (border_index[1, 0] < xy_coord[:, 1]) & (xy_coord[:, 1] < border_index[1, 1])
+            xyc_coord = np.append(xy_coord,np.vstack(conf),axis=1)
+            batch_coords.append(xyc_coord[s])
 
         stitched_coords[n] = np.concatenate(batch_coords, axis=0)
 

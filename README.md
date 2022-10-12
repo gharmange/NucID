@@ -7,7 +7,7 @@ Below is a step by step guide on how to use NucID.
 ## Setting up for use on Google Colab (you should only need to do this once)
 Google Colab gives access to GPUs which makes running NucID significantly faster. An issue with google Colab is that every time you open a session
 it does not save any previously installed packages. To avoid the need to install large packages such as deepcell each time we will create a folder
-on google drive containing the necessary package and then mount google drive to google Colab.
+on google drive containing the necessary packages.
 
 1. The first step is to download NucID from GitHub by clicking the green "Code" button above and selecting "Download ZIP." You should now have a file in your download folder called "NucID-main". Rename this folder to "NucID".
 
@@ -17,3 +17,8 @@ on google drive containing the necessary package and then mount google drive to 
 simply by clicking on the file. If when you click on the file it does not open, follow the prompts to download google Colab. 
 
 ## Identifying Nuclei in Images
+1. Go to the NucID folder in your google drive through the browser and double click on it. This should open the notebook in Colab.
+
+2. First go to the Runtime tab in the menu at the top left of the screen and select the "Change runtime type" option. If it is not already, make sure you select GPU as your Hardware
+
+2. Run the first cell in the notebook labeled "Connect to Google Drive and install packages". Running this cell will cause a few prompts to show up on your screen, follow them to connect your google drive account containing the NucID folder

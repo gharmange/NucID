@@ -32,7 +32,9 @@ um/pixel values to use for each objective: 4X=3.25, 10X=1.29, 20X=.65, 60X=.22
    - **NucleusChannel:** This is the channel of your image that contains the nuclei you want to identify (uses base 1).
    - **WeightsPath:** This is the path to the weights the nueral network uses to identify nuclei. The weights pubslished with this repository can be found in the directory "NucID/weight/". For the best results most of the time I suggest you use the "10X_ms.pt" weight file in that directory.
    - **PackagePath** This is the path to all the packages in the NucID repository. Simply enter the path to the "packages" folder in the NucID folder.
+   
    You should never need to change the rest of the paramaters with regular runs of NucID, but here are the explanations if you are going beyond base use:
    - **tileSize** This sets the final tile size that is input into the neural network. The Yolov7 model expects a 640X640 tile, providing a different tile size will cause the model to reshape the input image to 640X640
+   - **overlap** This parameter sets how much overlap is between tiles. overlap is necessary for stitching together locations of each cells in the large image. with a 640X640 a .1 value (10% overlap) works well.
    - **TrainPixelSize** This is the um/pixel size of the images the model was trained on. This parameter along with the RunPixelSize ensures that images are scaled properly.
-   - **overlap** This parameter sets how much overlap is between tiles. overlap is necessary for stitching together locations of each cells in the large image. with a 640*640 a .1 value (10% overlap) works well.
+

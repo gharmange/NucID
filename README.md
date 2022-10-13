@@ -1,8 +1,12 @@
 # NucID
 The purpose of this package is to rapidly identify the locations of nuclei in images. NucID uses a neural networks to identify nuclei 
 (specifically the yolov7 architecture). This repository contains pre-trained weights to easily identify nuclei in your images, but if these weights do not
-perform well on your images this repository also contains scripts to easily train the neural net on your cell type without needing to do any hand labeling of data.
-Below is a step by step guide on how to use NucID.
+perform well on your images this repository also contains scripts to easily train the neural net on your cell type without needing to do any hand labeling of data. Below is a step by step guide on how to use NucID.
+
+<h3 align="center">Example output of NucID</h3>
+<p align="center">
+  <img src="https://github.com/gharmange/NucID/blob/main/images/NucID_example.png" width="500" height="500">
+</p>
 
 ## Setting up for use on Google Colab (you should only need to do this once)
 Google Colab gives access to GPUs which makes running NucID significantly faster. An issue with google Colab is that every time you open a session

@@ -71,6 +71,7 @@ NOTE: Unlike running NucID both generating training data and training the model 
 <p align="center">
   <img src="https://github.com/gharmange/NucID/blob/main/images/CheckBB_example.png" width="250" height="250">
 </p>
+
 6. Nuclei can vary a lot in their density, if your training data has a very unbalanced number of images displaying very dense or very sparse nuclei the model may become biased to either call too many or not enough nuclei in an image. To avoid this bias we can try and balance the data using the `FindBalanceData` and `BalanceData` functions. The `FindBalaceData` takes as input the directory to the labels of your training data, how many bins you want to split this data in, and how many images to take per bin. This function determines how many nuclei there are in each image, bins these images depending on how many bins you specify, and then samples the number of files you specified from each bin. The output of the `FindBalaceData` is a list of paths to the labels that make a balanced data set. If you are happy with the number of files that will end up in the balanced data set then you can input this list into the `BalanceData` which will copy the labels and their corresponding images into a new folder named ‘ Balanced’. An example running these functions can be found in the section labeled "Balance Training Data".
 
 7. Once the Balanced data set is established you can run the `MakeValData` function inputting the path to the balanced folder and the number of files you want in your validation data set and the function will output a "val" folder with the images and the labels. An example of this can be found in the last cell of the section labeled "Balance Training Data".
@@ -81,16 +82,25 @@ NOTE: Unlike running NucID both generating training data and training the model 
 
 10. We are now ready to input the command to train the model. First for the model to train you need your current directory to be the yolov7 package folder (should be this directory: '/NucID/packages/yolov7'). The command for training is run in the terminal (or in the notebook using the correct escape character) and then running `python training.py` followed by the following parameters:
 
-**-- device** Device tells the model to run on the GPU (enter the GPU number ex. 0) or the CPU enter ('cpu'). Since training the model would take way too long on a CPU you will almost always enter `-- device 0`
-**--batch-size** This is how many images are used for every forward and backward pass before updating weight. There is a lot online about the costs and benefits of small vs large batch size if you are interested, but I usually use 8 or 16 here and it seems to work well.
-**--epochs** This is how many times the model will pass through the whole data set. The more epochs you do the better the model will perform until you start overfitting. I have tried epochs of 50 or 100, not sure if these are optimal but seem to work pretty well.
-**--img** this is the dimensions of the input image, the training data should have been made at 640X640 so input 640 here.
-**--data** This is the path to the yaml file we edited in step 8, you should enter the path starting from yolov7 ex. 'data/Nuclei.yaml'
-**--hyp** These are the hyperparameters the model uses (referred to in step 9) the path should be: ‘data/hyp.scratch.custom.yaml’
-**--cfg** The config file contains information about the structure of the model enter this path: ‘cfg/training/yolov7_nuc_cfg.yaml’
-**--weights** The model can train starting on blank weights in which case enter '' or you can start off from some pre-trained weights. If you would like to start with pre-trained weights, enter the path to the weights file you want to use ex. '/NucID/weights/10X_ms.pt'
-**--name** This will be the name of the folder generated during the training and will contain the newly trained weights and information about the training
-**--multi-scale** This is an optional parameter that will occasionally change the scale of images during training to attempt to make the model less sensitive to object sizes
+- **-- device** Device tells the model to run on the GPU (enter the GPU number ex. 0) or the CPU enter ('cpu'). Since training the model would take way too long on a CPU you will almost always enter `-- device 0`
+
+- **--batch-size** This is how many images are used for every forward and backward pass before updating weight. There is a lot online about the costs and benefits of small vs large batch size if you are interested, but I usually use 8 or 16 here and it seems to work well.
+
+- **--epochs** This is how many times the model will pass through the whole data set. The more epochs you do the better the model will perform until you start overfitting. I have tried epochs of 50 or 100, not sure if these are optimal but seem to work pretty well.
+
+- **--img** this is the dimensions of the input image, the training data should have been made at 640X640 so input 640 here.
+
+- **--data** This is the path to the yaml file we edited in step 8, you should enter the path starting from yolov7 ex. 'data/Nuclei.yaml'
+
+- **--hyp** These are the hyperparameters the model uses (referred to in step 9) the path should be: ‘data/hyp.scratch.custom.yaml’
+
+- **--cfg** The config file contains information about the structure of the model enter this path: ‘cfg/training/yolov7_nuc_cfg.yaml’
+
+- **--weights** The model can train starting on blank weights in which case enter '' or you can start off from some pre-trained weights. If you would like to start with pre-trained weights, enter the path to the weights file you want to use ex. '/NucID/weights/10X_ms.pt'
+
+- **--name** This will be the name of the folder generated during the training and will contain the newly trained weights and information about the training
+
+- **--multi-scale** This is an optional parameter that will occasionally change the scale of images during training to attempt to make the model less sensitive to object sizes
 
 An example of this command can be found in the first cell of the section labeled 'Train your model'
 

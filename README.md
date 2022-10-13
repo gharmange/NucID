@@ -31,6 +31,7 @@ um/pixel values to use for each objective: 4X=3.25, 10X=1.29, 20X=.65, 60X=.22
 
    - **NucleusChannel:** This is the channel of your image that contains the nuclei you want to identify (uses base 1).
    - **WeightsPath:** This is the path to the weights the nueral network uses to identify nuclei. The weights pubslished with this repository can be found in the directory "NucID/weight/". For the best results most of the time I suggest you use the "10X_ms.pt" weight file in that directory.
+   -  **Confidence_thresh** This is the threshold of confidence the model has to have that somethign is a nuclei to save it. If you have a threshold you know works just set it here and your ouputs will be directly what you want, however, if you are not sure of the confidence threshold to use you can set the threshold to 0 so that it saves everythign the model thinks may be a nucleus, and then later filter trying a few confidence thresholds using the "FilterCoords" function described in step 7 below.
    - **PackagePath** This is the path to all the packages in the NucID repository. Simply enter the path to the "packages" folder in the NucID folder.
    
    You should never need to change the rest of the paramaters with regular runs of NucID, but here are the explanations if you are going beyond base use:

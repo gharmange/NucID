@@ -14,7 +14,7 @@ import shutil
 
 
 #funtion to use images and mask data to generate training data for NucID
-def MakeTrainingData(img_path,mask_path,outpath,nuc_channel,num_val,tileSize,overlap,num, upSize=False):
+def MakeTrainingData(img_path,mask_path,outpath,nuc_channel,num,input_pixel_size=1.29,output_pixel_size=1.29,tileSize=640,overlap=.1,upSize=False):
   ## Save image tiles
   #read in image
   image = tifffile.imread(img_path)
@@ -32,6 +32,15 @@ def MakeTrainingData(img_path,mask_path,outpath,nuc_channel,num_val,tileSize,ove
       pass
   else:
       print("input files must be in the uint16 or uint8 bit depth")
+
+  #scale the image
+  scale = input_pixel_size/output_pixel_size
+  if scale != 1:
+     width = image.shape[0]
+     height = image.shape[1]
+     scale_width = int(width * scale)
+     scale_height = int(height * scale)
+     image = cv2.resize(image,(scale_width,scale_height))
 
   #put image in deeptile object
   dt = deeptile.load(image)

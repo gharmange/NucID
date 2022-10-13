@@ -82,7 +82,7 @@ NOTE: Unlike running NucID both generating training data and training the model 
 
 10. We are now ready to input the command to train the model. First for the model to train you need your current directory to be the yolov7 package folder (should be this directory: '/NucID/packages/yolov7'). The command for training is run in the terminal (or in the notebook using the correct escape character) and then running `python training.py` followed by the following parameters:
 
-- **-- device** Device tells the model to run on the GPU (enter the GPU number ex. 0) or the CPU enter ('cpu'). Since training the model would take way too long on a CPU you will almost always enter `-- device 0`
+- **--device** Device tells the model to run on the GPU (enter the GPU number ex. 0) or the CPU enter ('cpu'). Since training the model would take way too long on a CPU you will almost always enter `--device 0`
 
 - **--batch-size** This is how many images are used for every forward and backward pass before updating weight. There is a lot online about the costs and benefits of small vs large batch size if you are interested, but I usually use 8 or 16 here and it seems to work well.
 

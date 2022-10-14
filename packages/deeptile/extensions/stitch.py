@@ -221,8 +221,11 @@ def stitch_coords(coords):
             xy_coord = xy_coord + np.array([tile_index[0, 0], tile_index[1, 0]])
             s = (border_index[0, 0] < xy_coord[:, 0]) & (xy_coord[:, 0] < border_index[0, 1]) & \
                 (border_index[1, 0] < xy_coord[:, 1]) & (xy_coord[:, 1] < border_index[1, 1])
-            xyc_coord = np.append(xy_coord,np.vstack(conf),axis=1)
-            batch_coords.append(xyc_coord[s])
+
+            #only add if the array is not empty
+            if xy_coord.size :
+                xyc_coord = np.append(xy_coord,np.vstack(conf),axis=1)
+                batch_coords.append(xyc_coord[s])
 
         stitched_coords[n] = np.concatenate(batch_coords, axis=0)
 

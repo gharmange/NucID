@@ -77,27 +77,6 @@ class Nucid:
         scale_height = int(height * self.scale)
 
         self.image = cv2.resize(self.image,(scale_width,scale_height))
-      # if self.run_um_per_pix < self.train_um_per_pix:
-      #   self.scale = self.run_um_per_pix/self.train_um_per_pix
-      #   width = self.image.shape[0]
-      #   height = self.image.shape[1]
-      #
-      #   scale_width = int(width * self.scale)
-      #   scale_height = int(height * self.scale)
-      #
-      #   self.image = cv2.resize(self.image,(scale_width,scale_height))
-      #   self.image = cv2.resize(self.image,(width,height))
-      #
-      # elif self.run_um_per_pix > self.train_um_per_pix:
-      #   self.scale = self.run_um_per_pix/self.train_um_per_pix
-      #   width = self.image.shape[0]
-      #   height = self.image.shape[1]
-      #   scale_width = int(width * self.scale)
-      #   scale_height = int(height * self.scale)
-      #
-      #   self.image = cv2.resize(self.image,(scale_width,scale_height))
-      # else:
-      #     self.scale = 1
 
 
   def LoadTile(self,tile):

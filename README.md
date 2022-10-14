@@ -27,7 +27,7 @@ simply by clicking on the file. If when you click on the file it does not open, 
 
 3. Run the first cell in the notebook labeled "Connect to Google Drive and install packages". Running this cell will cause a few prompts to show up on your screen, follow them to connect your google drive account containing the NucID folder. Running this cell will also download a couple of packages needed to run the code. This section of code needs to be run once every time you open the notebook.
 
-4. Next fill out the variable in the "Fill out variables and load packages" and run it. Here is an overview of each parameter:
+4. Next fill out the variable in the "Fill out variables and load packages" and run it. Note that when running on colab paths are not exactly the same as on your computer, they will start with '/content/drive/MyDrive'. You can just substitute this as the starts of paths or you can navigate the drive through the colab interface on the left side of the screen, right click on folders or files and select copy path. Here is an overview of each parameter:
 
    - **TIF_PATHS:** here we use glob to get a list of all image paths (images need to be in tif format) you want to run NucID on.
    - **RunPixelSize:** This value is the um/pixel of the images you are inputting. If you are using Shaffer Lab scope with 2x2 binning these are the

@@ -69,21 +69,19 @@ class Nucid:
       else:
           print("input files must be in the uint16 or uint8 bit depth")
 
-      #figure our correct scale
-      self.scale = self.run_um_per_pix/self.train_um_per_pix
-
+  def scaleTile(self):
+      self.scale_tileSize = self.tileSize/self.scale
 
   def LoadTile(self,tile):
       self.tile = np.array(tile)
 
-      if self.scale != 1:
-        new_dim = int(self.tileSize * self.scale)
-
-        self.tile = cv2.resize(self.tile,(new_dim,new_dim))
-
       tile0 = np.stack([self.tile,self.tile,self.tile],-1)
       assert tile0 is not None, 'Image Not Found '
       self.tile0_shape = tile0.shape
+
+      #scale tile in necessary
+      if self.scale != 1:
+        self.tile = cv2.resize(self.tile,(640,640))
 
       # Padded resize
       self.tile = letterbox(tile0, 640, stride=32)[0]
@@ -127,9 +125,6 @@ class Nucid:
     else:
       nucyx = np.array(nucyx)
 
-    nucyx[:,0] = nucyx[:,0]/self.scale
-    nucyx[:,1] = nucyx[:,1]/self.scale
-
     self.nucxy = nucyx[:, [1, 0, 2]]
 
 
@@ -145,7 +140,8 @@ class Nucid:
       dt = deeptile.load(self.image)
 
       # Configure
-      tile_size = (self.tileSize, self.tileSize)
+      self.scaleTile()
+      tile_size = (self.scale_tileSize, self.scale_tileSize)
       overlap_c = (self.overlap, self.overlap)
 
       # Get tiles
@@ -180,7 +176,10 @@ class Nucid:
       #get tile of interest
       X = location[1]
       Y = location[0]
-      half_tile = int(.5 * self.tileSize)
+
+      self.scaleTile()
+
+      half_tile = int(.5 * self.scale_tileSize)
       tile = self.image[X-half_tile:X+half_tile,Y-half_tile:Y+half_tile]
 
       #run model
@@ -188,7 +187,6 @@ class Nucid:
 
       #run model on tile
       self.RunModel(tile)
-
       dh, dw =  tile.shape
       ##contrast image properly
       #normalize tiff image

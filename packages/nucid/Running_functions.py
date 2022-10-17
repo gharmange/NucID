@@ -157,8 +157,8 @@ class Nucid:
       #change yx to xy
       stitched_coords = stitched_coords[:, [1, 0,2]]
       #scale coordinates to proper image size
-      stitched_coords[:,0] = stitched_coords[:,0] #/self.scale
-      stitched_coords[:,1] = stitched_coords[:,1] #/self.scale
+      stitched_coords[:,0] = stitched_coords[:,0]
+      stitched_coords[:,1] = stitched_coords[:,1] 
 
       #write csv with coordinates of cells
       self.coord_path = self.tif_path.split('.tif')[0] + '_nuc_xy.csv'
@@ -190,7 +190,7 @@ class Nucid:
       dh, dw =  tile.shape
       ##contrast image properly
       #normalize tiff image
-      norm_image = cv2.normalize(tile, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+      norm_image = cv2.normalize(tile, conf_labels = True, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
       # brighten up image if necessary (code taken from: https://stackoverflow.com/questions/57030125/automatically-adjusting-brightness-of-image-with-opencv)
       cols, rows = norm_image.shape
       brightness = np.sum(norm_image) / (255 * cols * rows)
@@ -206,7 +206,8 @@ class Nucid:
       for coord in self.nucxy:
         x, y, conf = coord
         cv2.drawMarker(col_norm_image, (int(x), int(y)),(0,255,0), markerType=cv2.MARKER_CROSS,markerSize=3, thickness=1, line_type=cv2.LINE_AA)
-        cv2.putText(col_norm_image, str(round(conf,3)), (int(x), int(y)-5), cv2.FONT_HERSHEY_SIMPLEX, .3, (255,0,0), 1)
+        if conf_labels:
+            cv2.putText(col_norm_image, str(round(conf,3)), (int(x), int(y)-5), cv2.FONT_HERSHEY_SIMPLEX, .3, (255,0,0), 1)
 
       plt.figure(figsize=(figSize, figSize))
       plt.imshow(col_norm_image)
@@ -248,7 +249,7 @@ def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scale
     return img, ratio, (dw, dh)
 
 
-def checkNucXY(tif_path,nucxy_path, conf_thresh = 0, conf_label= True, markerSize=3, min_brightness=.15):
+def checkNucXY(tif_path,nucxy_path, conf_thresh = 0, conf_labels= True, markerSize=3, min_brightness=.15):
     #load image and coordinates
     image = tifffile.imread(tif_path)
     XY = np.genfromtxt(nucxy_path, delimiter=',')
@@ -276,7 +277,7 @@ def checkNucXY(tif_path,nucxy_path, conf_thresh = 0, conf_label= True, markerSiz
       x, y, conf = coord
 
       cv2.drawMarker(col_norm_image, (int(x), int(y)),(0,255,0), markerType=cv2.MARKER_CROSS,markerSize=markerSize, thickness=1, line_type=cv2.LINE_AA)
-      if conf_label:
+      if conf_labels:
           cv2.putText(col_norm_image, str(round(conf,3)), (int(x), int(y)-5), cv2.FONT_HERSHEY_SIMPLEX, .3, (0,0,255), 1)
 
     check_path = nucxy_path.split('.csv')[0] + '_check.jpg'

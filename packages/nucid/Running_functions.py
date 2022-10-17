@@ -158,7 +158,7 @@ class Nucid:
       stitched_coords = stitched_coords[:, [1, 0,2]]
       #scale coordinates to proper image size
       stitched_coords[:,0] = stitched_coords[:,0]
-      stitched_coords[:,1] = stitched_coords[:,1] 
+      stitched_coords[:,1] = stitched_coords[:,1]
 
       #write csv with coordinates of cells
       self.coord_path = self.tif_path.split('.tif')[0] + '_nuc_xy.csv'
@@ -170,7 +170,7 @@ class Nucid:
       print(end-start)
 
 
-  def TestModel(self,location,min_brightness=.15,figSize=20):
+  def TestModel(self,location, conf_labels = True, min_brightness=.15,figSize=20):
       self.LoadImage()
 
       #get tile of interest
@@ -190,7 +190,7 @@ class Nucid:
       dh, dw =  tile.shape
       ##contrast image properly
       #normalize tiff image
-      norm_image = cv2.normalize(tile, conf_labels = True, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+      norm_image = cv2.normalize(tile, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
       # brighten up image if necessary (code taken from: https://stackoverflow.com/questions/57030125/automatically-adjusting-brightness-of-image-with-opencv)
       cols, rows = norm_image.shape
       brightness = np.sum(norm_image) / (255 * cols * rows)

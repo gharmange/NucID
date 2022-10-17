@@ -31,7 +31,7 @@ simply by clicking on the file. If when you click on the file it does not open, 
 
    - **TIF_PATHS:** here we use glob to get a list of all image paths (images need to be in tif format) you want to run NucID on.
    - **RunPixelSize:** This value is the um/pixel of the images you are inputting. If you are using Shaffer Lab scope with 2x2 binning these are the
-um/pixel values to use for each objective: 4X=3.25, 10X=1.29, 20X=.65, 60X=.22
+um/pixel values to use for each objective: 4X=3.25, 10X=1.29, 20X=.65, 60X=.22. Although giving the exact um/pixel size has the best chance of succedding I have found you can not scale completely correctly and still get quite good results. For example when doing 4x images I recommend you actually input 2.58 here as it does a good job indentifying nuclei and will process images almost 4x faster.
 
    - **NucleusChannel:** This is the channel of your image that contains the nuclei you want to identify (uses base 1).
    - **WeightsPath:** This is the path to the weights the neural network uses to identify nuclei. The weights published with this repository can be found in the directory "/NucID/weight/". For the best results most of the time I suggest you use the "10X_ms.pt" weight file in that directory.

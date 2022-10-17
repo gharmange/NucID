@@ -15,7 +15,7 @@ on google drive containing the necessary packages.
 
 1. The first step is to download NucID from GitHub by clicking the green "Code" button above and selecting "Download ZIP." You should now have a file in your download folder called "NucID-main". Rename this folder to "NucID".
 
-2. Go to your google drive account and, in the "My Drive" folder, create a folder called "Colab" and add to it the NucID folder downloaded from this repository.
+2. Go to your google drive account and, in the "My Drive" folder, create a folder called "Colab" and then add the NucID folder downloaded from this repository to the "Colab" folder just created.
 
 3. If you access google drive from the browser you should now be able to open "RunNucID.ipynb" if you want to run nuclei detection on images, or open "TrainNucID.ipynb" if you want to train the model on new images
 simply by clicking on the file. If when you click on the file it does not open, follow the prompts to download google Colab.

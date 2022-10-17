@@ -68,7 +68,7 @@ class Nucid:
           print("input files must be in the uint16 or uint8 bit depth")
 
       #figure our correct scale
-      self.scale = self.train_um_per_pix/self.run_um_per_pix
+      self.scale = self.run_um_per_pix/self.train_um_per_pix
       if self.scale != 1:
         width = self.image.shape[0]
         height = self.image.shape[1]

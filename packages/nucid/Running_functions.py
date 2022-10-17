@@ -24,6 +24,8 @@ class Nucid:
       self.run_um_per_pix = run_um_per_pix
       self.train_um_per_pix = train_um_per_pix
 
+      self.scale = self.run_um_per_pix/self.train_um_per_pix
+
       #load the model
       self.LoadModel()
 
@@ -82,12 +84,14 @@ class Nucid:
   def LoadTile(self,tile):
       self.tile = np.array(tile)
 
+      if self.scale != 1:
+        new_dim = int(self.tileSize * self.scale)
+
+        self.tile = cv2.resize(self.tile,(new_dim,new_dim))
+
       tile0 = np.stack([self.tile,self.tile,self.tile],-1)
       assert tile0 is not None, 'Image Not Found '
       self.tile0_shape = tile0.shape
-
-      #if self.upSize:
-          #self.tile = cv2.resize(np.array(self.tile),(640,640))
 
       # Padded resize
       self.tile = letterbox(tile0, 640, stride=32)[0]
@@ -131,9 +135,12 @@ class Nucid:
     else:
       nucyx = np.array(nucyx)
 
+    nucyx[:,0] = nucyx[:,0]/self.scale
+    nucyx[:,1] = nucyx[:,1]/self.scale
+
     self.nucxy = nucyx[:, [1, 0, 2]]
 
-    #TO DO make output handle saving confidence
+
     return Output(nucyx, isimage=False)
 
 
@@ -162,8 +169,8 @@ class Nucid:
       #change yx to xy
       stitched_coords = stitched_coords[:, [1, 0,2]]
       #scale coordinates to proper image size
-      stitched_coords[:,0] = stitched_coords[:,0]/self.scale
-      stitched_coords[:,1] = stitched_coords[:,1]/self.scale
+      stitched_coords[:,0] = stitched_coords[:,0] #/self.scale
+      stitched_coords[:,1] = stitched_coords[:,1] #/self.scale
 
       #write csv with coordinates of cells
       self.coord_path = self.tif_path.split('.tif')[0] + '_nuc_xy.csv'

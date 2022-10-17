@@ -70,7 +70,7 @@ class Nucid:
           print("input files must be in the uint16 or uint8 bit depth")
 
   def scaleTile(self):
-      self.scale_tileSize = self.tileSize/self.scale
+      self.scale_tileSize = int(self.tileSize/self.scale)
 
   def LoadTile(self,tile):
       self.tile = np.array(tile)
